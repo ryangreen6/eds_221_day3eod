@@ -1,0 +1,116 @@
+---
+title: "conditionals_loops"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+# task 1
+pm2_5 <- 48
+
+for(i in seq_along(pm2_5)) {
+  if(pm2_5[i] < 100) {
+  print("Low to Moderate Risk")
+} else if (100 <pm2_5[i] & pm2_5[i] < 150) {
+  print("Unhealthy for Sensitive Groups")
+} else if (pm2_5 > 150) {
+  print("Health Risk Present")
+}
+}
+```
+
+```{r}
+# task 2
+library(stringr)
+library(tidyverse)
+
+species <- "blue whale"
+
+if(str_detect(species, "whale")){
+  print("you found a whale!")
+} else {
+  print("that's no whale...")
+}
+```
+
+```{r}
+# task 3
+base_burrito <- 6.50
+main_ingredient <- "veggie"
+
+if(main_ingredient == "veggie") print(base_burrito) else if (main_ingredient == "chicken") print (base_burrito+3) else if (main_ingredient == "steak") print (base_burrito+3.25)
+```
+
+```{r}
+# task 4
+fish_count <- c(8,10,12,23)
+fish_type <- c("goldfish", "tetras", "guppies", "mollies")
+  
+for(i in seq_along(fish_type)){
+print(paste0(round((fish[i]/sum(fish_count)), 2) *100, "% are ", fish_type[i], "."))
+}
+```
+
+```{r}
+# task 5
+
+for(i in seq_along(month.name)){
+  print(paste0(month.name[i]," ", "is month", " ", i))
+}
+```
+
+```{r}
+# real data
+library(here)
+library(janitor)
+library(purrr)
+toolik_biochem <- read.csv(here::here("data", "2011_Kling_Akchem.csv"), na.strings = c(".", "NA")) %>% clean_names()
+
+inlet_biochem <- toolik_biochem |> filter(str_detect(site, "(?i)toolik inlet")) |> select(c(p_h, doc_u_m, tdn_u_m))
+
+
+apply(X =inlet_biochem, MARGIN =2, FUN =mean, na.rm=TRUE)
+
+
+mean <- rep(0, ncol(inlet_biochem))
+  for (i in 1:ncol(inlet_biochem)){
+    tempSum <- 0
+    for (j in inlet_biochem[[i]]){
+      if(is.na(j) == TRUE){
+        mean[i] <- mean[i] + 1
+      }else{
+        tempSum <- tempSum + j
+      }
+    }
+
+mean[i] <- tempSum / (length(inlet_biochem[[i]])- mean[i])
+}
+
+mean
+  
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
